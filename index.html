@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/1.0.0/modern-normalize.min.css"
+        integrity="sha512-ISS7cAi1PEhQ8jnbJpJZMd29NlhNj4AWYyLOSp2CE/CsHxTCu+r+t0D2yoJudVrd0/8fTVPUVDzY5Tvli75u/g=="
+        crossorigin="anonymous" />
+        <link rel="stylesheet" href="styles.css">
+    </head>
+
+  <body>
+    <div class="container">
+      <form class="form" id="form">
+        <input
+          class="input"
+          type="text"
+          name="name"
+          autocomplete="off"
+          placeholder="Enter name"
+          required
+          pattern="^[а-яА-ЯёЁa-zA-Z0-9]+$"
+          title="Name contains only numbers and letters."
+        />
+        <input
+          class="input2"
+          type="text"
+          name="value"
+          autocomplete="off"
+          placeholder="Enter value"
+          required
+          pattern="^[а-яА-ЯёЁa-zA-Z0-9]+$"
+          title="Value contains only numbers and letters."
+        />
+        <button type="submit" class="btn">
+          <span class="label">Add</span>
+        </button>
+      </form>
+
+      <div class='buttons'>
+        <button type="button" class="del">
+            <span class="label">Del</span>
+        </button>
+        
+        <button type="button" class="btn-sort-value">
+            <span class="label">Sort by value</span>
+        </button>
+        
+        <button type="button" class="btn-sort-name">
+            <span class="label">Sort by name</span>
+        </button>
+        
+        <button type="button" class="btn-XML">
+            <span class="label">DownLoad XML</span>
+        </button>
+      </div>
+
+      <ul class="list"></ul>
+    </div>
+
+    <script src="./index.js" type="module"></script>
+  </body>
+</html>
+
+<!-- //сортировки подобны - вынести в отд фукции отличия - будет норм -->
+<!-- как-то сортировка по имени не совсем корректно работает -->
+<!-- сделать очистку импута после добавления -->
+
+
+
+<!-- необязательно: -->
+<!-- разобраться с кодом по скачиванию -->
+<!-- сделать кнопку удаления активной только при выборе хотя бы одного элемента -->
