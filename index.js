@@ -1,117 +1,94 @@
 const formEl = document.querySelector('#form');
-const btnEl = document.querySelector('.btn');
 const listEl = document.querySelector('.list');
 const itemEl = listEl.children;
 const btnDelEl = document.querySelector('.del');
 const btnSortValueEl = document.querySelector('.btn-sort-value');
 const btnSortNameEl = document.querySelector('.btn-sort-name');
 const btnXMLEl = document.querySelector('.btn-XML');
-
+//
 formEl.addEventListener('submit', onSubmit);
 btnDelEl.addEventListener('click', onDel);
-btnSortValueEl.addEventListener('click', onClickValue);
-btnSortNameEl.addEventListener('click', onClickName);
+btnSortValueEl.addEventListener('click', onClick);
+btnSortNameEl.addEventListener('click', onClick);
 listEl.addEventListener('click', onChooseItem);
 btnXMLEl.addEventListener('click', onXML);
 
-let arr = [];
+//create and add list of name/value pairs that were received from the end-user.
+// Also set attributes for each value in a pair for the next sorting
 
 function onSubmit(e) {
   e.preventDefault();
-
   let name = e.currentTarget.elements.name.value;
   let value = e.currentTarget.elements.value.value;
-  const obj = {};
-  obj.name = name;
-  obj.value = value;
-  arr.splice(0, 0, obj);
   const liEl = document.createElement('li');
-  liEl.textContent = `${obj.name}=${obj.value}`;
+  liEl.textContent = `${name}=${value}`;
+  liEl.setAttribute('data-name', name.toLowerCase());
+  liEl.setAttribute('data-value', value.toLowerCase());
   listEl.append(liEl);
 }
 
-//сортирует, отрисовывает, но замещает список лишками, надо придумаьб, как сделать общий ли
-function onClickValue(e) {
-  const sort = [...arr].sort((a, b) => a.value - b.value);
-  while (listEl.firstChild) {
-    listEl.removeChild(listEl.firstChild);
-  }
-  const elements = sort.map(obj => {
-    const el = document.createElement('li');
-    el.textContent = obj.name + '=' + obj.value;
-    return el;
-  });
-
-  listEl.append(...elements);
+// function for sorting.
+function onClick(e) {
+  let sort;
+  e.target.textContent === 'Sort by value'
+    ? (sort = [...itemEl].sort(compareByValue))
+    : (sort = [...itemEl].sort(compareByName));
+  listEl.append(...sort);
 }
 
-function onClickName(e) {
-  //саша говорил еще указывать индекс
-  // const sort = [...arr].sort((a, b) => {
-  //   const result = a.name[0] - b.name[0];
-  //   if (result) {
-  //     return 1;
-  //   }
-  //   if (!result) {
-  //     return -1;
-  //   }
-  //   return 0;
-
-  //   // a.name.localeCompare(b.name);
-  // });
-  const sort = [...arr].sort(compare);
-  while (listEl.firstChild) {
-    listEl.removeChild(listEl.firstChild);
-  }
-  const elements = sort.map(obj => {
-    const el = document.createElement('li');
-    el.textContent = obj.name + '=' + obj.value;
-    return el;
-  });
-
-  listEl.append(...elements);
-}
-
-function compare(a, b) {
-  // check for numberhood
-  const numA = !isNaN(a.name);
-  const numB = !isNaN(b.name);
+function compareByValue(a, b) {
+  const prevValue = Number(a.getAttribute('data-value'));
+  const nextValue = Number(b.getAttribute('data-value'));
+  const numA = !isNaN(prevValue);
+  const numB = !isNaN(nextValue);
   if (numA && numB) {
-    return numA - numB;
+    return prevValue - nextValue;
   }
-
-  return a.name.localeCompare(b.name);
+  return a
+    .getAttribute('data-value')
+    .localeCompare(b.getAttribute('data-value'));
 }
 
-//по одному удаляются
-function onDel(e) {
-  document.querySelectorAll('.choose').forEach(el => el.remove());
+function compareByName(a, b) {
+  const prevName = Number(a.getAttribute('data-name'));
+  const nextName = Number(b.getAttribute('data-name'));
+  const numA = !isNaN(prevName);
+  const numB = !isNaN(nextName);
+  if (numA && numB) {
+    return prevName - nextName;
+  }
+  return a.getAttribute('data-name').localeCompare(b.getAttribute('data-name'));
 }
 
+// add active class on chosen elements in the list
 function onChooseItem(e) {
   if (e.target.nodeName !== 'LI') {
     return;
   }
-
-  e.target.classList.toggle('choose');
+  e.target.classList.toggle('chosen');
 }
 
+// function for deleting chosen elements
+function onDel(e) {
+  document.querySelectorAll('.chosen').forEach(el => {
+    el.remove();
+  });
+}
+
+//function for downloading xml-file
 function onXML() {
   const string = new XMLSerializer();
   const xmlString = string.serializeToString(listEl);
-  // alert(xmlString);
-  // var pom = document.createElement("a");
+  const filename = 'file.xml';
+  const link = document.createElement('a');
+  const bb = new Blob([xmlString], { type: 'text/plain' });
 
-  var filename = 'file.xml';
-  var pom = document.createElement('a');
-  var bb = new Blob([xmlString], { type: 'text/plain' });
+  link.setAttribute('href', window.URL.createObjectURL(bb));
+  link.setAttribute('download', filename);
 
-  pom.setAttribute('href', window.URL.createObjectURL(bb));
-  pom.setAttribute('download', filename);
+  link.dataset.downloadurl = ['text/plain', link.download, link.href].join(':');
+  link.draggable = true;
+  link.classList.add('dragout');
 
-  pom.dataset.downloadurl = ['text/plain', pom.download, pom.href].join(':');
-  pom.draggable = true;
-  pom.classList.add('dragout');
-
-  pom.click();
+  link.click();
 }

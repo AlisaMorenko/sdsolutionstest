@@ -26,9 +26,6 @@ input {
   width: 100%;
   line-height: 2;
 }
-/* input:invalid {
-  border: 2px solid red;
-} */
 
 button {
   display: inline-block;
@@ -53,7 +50,7 @@ button:hover {
   margin: 30px 0px 30px;
 }
 
-.choose {
+.chosen {
   background-color: rgb(175, 136, 136);
 }
 
