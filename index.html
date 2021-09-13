@@ -13,7 +13,7 @@
 
   <body>
     <div class="container">
-      <form class="form" id="form">
+      <form id="form">
         <input
           type="text"
           name="name"
@@ -32,13 +32,11 @@
           pattern="^[а-яА-ЯёЁa-zA-Z0-9]+$"
           title="Value contains only numbers and letters."
         />
-        <button type="submit" class="btn">
-          <span class="label">Add</span>
-        </button>
+        <button type="submit" class="btn">Add</button>
       </form>
 
       <div class='buttons'>
-        <button type="button" class="del">Del</button>
+        <button type="button" class="del" disabled="disabled">Del</button>
         
         <button type="button" class="btn-sort-value">Sort by value</button>
         
@@ -55,6 +53,5 @@
 </html>
 
 
-<!-- сделать очистку импута после добавления -->
 
 

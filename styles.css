@@ -4,11 +4,6 @@ body {
   background-color: #656;
 }
 
-.container {
-  padding: 0px 15px;
-  margin: 0px auto;
-}
-
 li {
   list-style: none;
   margin: 0px 0px 5px 0px;
@@ -46,7 +41,12 @@ button:hover {
   cursor: pointer;
 }
 
-.form {
+.container {
+  padding: 0px 15px;
+  margin: 0px auto;
+}
+
+#form {
   margin: 30px 0px 30px;
 }
 
@@ -55,7 +55,6 @@ button:hover {
 }
 
 .list {
-  /* border: 2px solid #3218c7; */
   border-radius: 10px;
   min-height: 300px;
   margin: 20px 0px 30px;
@@ -63,9 +62,6 @@ button:hover {
   box-shadow: 0px 0px 29px 10px rgba(0, 0, 0, 0.52) inset;
   -webkit-box-shadow: 0px 0px 29px 10px rgba(0, 0, 0, 0.52) inset;
   -moz-box-shadow: 0px 0px 29px 10px rgba(0, 0, 0, 0.52) inset;
-}
-
-@media screen and (max-width: 479px) {
 }
 
 @media screen and (min-width: 480px) {
@@ -89,7 +85,7 @@ button:hover {
     font-size: 16px;
   }
 
-  .form {
+  #form {
     margin: 50px 0px 30px;
   }
 

@@ -25,6 +25,7 @@ function onSubmit(e) {
   liEl.setAttribute('data-name', name.toLowerCase());
   liEl.setAttribute('data-value', value.toLowerCase());
   listEl.append(liEl);
+  formEl.reset();
 }
 
 // function for sorting.
@@ -65,26 +66,28 @@ function onChooseItem(e) {
   if (e.target.nodeName !== 'LI') {
     return;
   }
+  btnDelEl.removeAttribute('disabled');
   e.target.classList.toggle('chosen');
 }
 
 // function for deleting chosen elements
-function onDel(e) {
+function onDel() {
   document.querySelectorAll('.chosen').forEach(el => {
     el.remove();
   });
+  btnDelEl.setAttribute('disabled', 'disabled');
 }
 
 //function for downloading xml-file
 function onXML() {
   const string = new XMLSerializer();
   const xmlString = string.serializeToString(listEl);
-  const filename = 'file.xml';
+  const fileName = 'file.xml';
   const link = document.createElement('a');
   const bb = new Blob([xmlString], { type: 'text/plain' });
 
   link.setAttribute('href', window.URL.createObjectURL(bb));
-  link.setAttribute('download', filename);
+  link.setAttribute('download', fileName);
 
   link.dataset.downloadurl = ['text/plain', link.download, link.href].join(':');
   link.draggable = true;
